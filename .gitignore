@@ -1,0 +1,31 @@
+# Go build artifacts
+/bin/
+/obj/
+/*.out
+
+# Dependency directories
+/vendor/
+
+# Go modules
+/go.sum
+/go.mod
+
+# IDE-specific files
+.vscode/
+/.idea/
+
+# Environment files
+.env
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Air configuration (optional, only if you want to ignore it)
+.air.toml
