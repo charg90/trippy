@@ -1,5 +1,7 @@
 package dto
 
+import "github.com/google/uuid"
+
 type CreateUserDto struct {
 	FirstName string `json:"firstName" validate:"required,min=2,max=100"`
 	Password  string `json:"password" validate:"required,min=8,max=100"`
@@ -7,7 +9,7 @@ type CreateUserDto struct {
 }
 
 type UserResponseDto struct {
-    ID    uint   `json:"id"`
+    ID    uuid.UUID    `json:"id"`
     Name  string `json:"name"`
     Email string `json:"email"`
 }

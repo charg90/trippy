@@ -42,7 +42,7 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 	}
 
 	createUserResponse := dto.UserResponseDto{
-		ID:   createdUser.ID,
+		ID:    createdUser.ID,
 		Name: createdUser.FirstName,
 		Email: createdUser.Email,
 	}
@@ -63,10 +63,21 @@ func (c *UserController) Login(ctx *gin.Context) {
 		return
 	}
 
+
 	token, err := c.UserService.Login(&user)
 	if err != nil {
 		ctx.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, gin.H{"User": token})
+}
+
+func (c *UserController) GetUsers(ctx *gin.Context) {
+	users, err := c.UserService.GetUsers()
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(200, gin.H{"users": users})
 }

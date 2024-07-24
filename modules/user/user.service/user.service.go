@@ -11,6 +11,7 @@ import (
 type UserService interface {
 	CreateUser(user *dto.CreateUserDto) (*models.User, error)
 	Login(user *dto.LoginDto) (*dto.LoginResponseDto, error)
+	GetUsers() ([]models.User, error)
 }
 
 type UserServiceImpl struct {
@@ -34,11 +35,16 @@ func (s *UserServiceImpl) CreateUser(userDto *dto.CreateUserDto) (*models.User, 
 	userDto.Password = hashedPassword
 
 	user:= &models.User{
+		ID: 	  utils.GenerateID(),
 		FirstName: userDto.FirstName,
 		Password:  userDto.Password,
 		Email:     userDto.Email,
 	}
-	return s.UserRepository.CreateUser(user)
+	userModel,err :=  s.UserRepository.CreateUser(user)
+	if err != nil {
+		return nil, err
+	}
+	return userModel, nil
 }
 
 func (s *UserServiceImpl) Login(userDto *dto.LoginDto) (*dto.LoginResponseDto, error) {
@@ -55,9 +61,19 @@ func (s *UserServiceImpl) Login(userDto *dto.LoginDto) (*dto.LoginResponseDto, e
 	if err != nil {
 		return nil, err
 	}
+	refreshToken,err := utils.GenerateRefreshToken(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
 	return &dto.LoginResponseDto{
 		Token:     token,
+		RefreshToken: refreshToken,
 		Email:     user.Email,
 		FirstName: user.FirstName,
 	}, nil
+}
+
+func (s *UserServiceImpl) GetUsers() ([]models.User, error) {
+	return s.UserRepository.GetUsers()
 }

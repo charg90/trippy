@@ -1,6 +1,7 @@
 package router
 
 import (
+	"trippy/middleware"
 	controller "trippy/modules/user/user-controller"
 	repositories "trippy/modules/user/user-repository/postgres-repository"
 	services "trippy/modules/user/user.service"
@@ -17,5 +18,7 @@ func SetupRouter() *gin.Engine {
 	
 	r.POST("/users", userController.CreateUser)
 	r.POST("/login", userController.Login)
+	r.GET("/users",middleware.AuthMiddleware(), userController.GetUsers)
+
 	return r
 }

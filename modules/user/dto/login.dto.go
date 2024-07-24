@@ -7,6 +7,7 @@ type LoginDto struct {
 
 type LoginResponseDto struct {
 	Token string `json:"token"`
+	RefreshToken string `json:"refreshToken"`
 	Email string `json:"email"`
 	FirstName string `json:"firstName"`
 

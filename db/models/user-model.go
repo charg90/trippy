@@ -1,9 +1,13 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type User struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
+	ID        uuid.UUID      `gorm:"type:uuid;primaryKey" json:"id"`
 	CreatedAt time.Time      `json:"createdAt"`
 	UpdatedAt time.Time      `json:"updatedAt"`
 	DeletedAt *time.Time     `gorm:"index" json:"deletedAt"`

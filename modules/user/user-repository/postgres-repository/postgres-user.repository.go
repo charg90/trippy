@@ -22,6 +22,7 @@ func (r *PostgresUserRepository) CreateUser(user *models.User) (*models.User, er
 	if err := r.database.Create(user).Error; err != nil {
 		return nil, err
 	}
+	
 	return user, nil
 }
 func (r *PostgresUserRepository) GetUserByEmail(email string) (*models.User, error) {
@@ -30,4 +31,11 @@ func (r *PostgresUserRepository) GetUserByEmail(email string) (*models.User, err
 		return nil, err
 	}
 	return user, nil
+}
+func (r *PostgresUserRepository) GetUsers() ([]models.User, error) {
+	var users []models.User
+	if err := r.database.Find(&users).Error; err != nil {
+		return nil, err
+	}
+	return users, nil
 }
