@@ -6,7 +6,6 @@ import (
 	"trippy/router"
 )
 
-
 func main() {
 	config.LoadEnv()
 	db.ConnectDb()

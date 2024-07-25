@@ -41,13 +41,9 @@ func (c *UserController) CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	createUserResponse := dto.UserResponseDto{
-		ID:    createdUser.ID,
-		Name: createdUser.FirstName,
-		Email: createdUser.Email,
-	}
+	
 
-	ctx.JSON(201, createUserResponse)
+	ctx.JSON(201, createdUser)
 }
 
 func (c *UserController) Login(ctx *gin.Context) {

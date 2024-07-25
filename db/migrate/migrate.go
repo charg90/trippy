@@ -6,12 +6,12 @@ import (
 	"trippy/db/models"
 )
 
-func init () {
+func init() {
 	config.LoadEnv()
 	db.ConnectDb()
 }
 
-func main()  {
-	db.DB.AutoMigrate(&models.User{})
+func main() {
+	db.DB.AutoMigrate(&models.User{}, &models.ActivityType{}, &models.Trip{}, &models.Activity{}, &models.Plan{})
 
 }

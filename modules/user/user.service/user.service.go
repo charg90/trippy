@@ -9,7 +9,7 @@ import (
 )
 
 type UserService interface {
-	CreateUser(user *dto.CreateUserDto) (*models.User, error)
+	CreateUser(user *dto.CreateUserDto) (*dto.UserResponseDto, error)
 	Login(user *dto.LoginDto) (*dto.LoginResponseDto, error)
 	GetUsers() ([]models.User, error)
 }
@@ -24,7 +24,7 @@ func NewUserService(userRepository repositories.UserRepository) *UserServiceImpl
 	}
 }
 
-func (s *UserServiceImpl) CreateUser(userDto *dto.CreateUserDto) (*models.User, error) {
+func (s *UserServiceImpl) CreateUser(userDto *dto.CreateUserDto) (*dto.UserResponseDto, error) {
 	
 	hashedPassword, err := utils.HashPassword(userDto.Password)
 	if err != nil {
@@ -44,10 +44,18 @@ func (s *UserServiceImpl) CreateUser(userDto *dto.CreateUserDto) (*models.User, 
 	if err != nil {
 		return nil, err
 	}
-	return userModel, nil
+
+	createUserResponse := &dto.UserResponseDto{
+		ID:    userModel.ID,
+		Name: userModel.FirstName,
+		Email: userModel.Email,
+	}
+	
+	return createUserResponse, nil
 }
 
 func (s *UserServiceImpl) Login(userDto *dto.LoginDto) (*dto.LoginResponseDto, error) {
+	
 	user, err := s.UserRepository.GetUserByEmail(userDto.Email)
 	if err != nil {
 		return nil, err
