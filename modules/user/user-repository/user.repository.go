@@ -1,10 +1,9 @@
 package repositories
 
-import "trippy/db/models"
+import "trippy/modules/user/domain"
 
-
-type UserRepository interface{
- CreateUser(user *models.User) (*models.User, error)
- GetUserByEmail(email string) (*models.User, error)
- GetUsers() ([]models.User, error)
+type UserRepository interface {
+	CreateUser(user *domain.User) (*domain.User, error)
+	GetUserByEmail(email string) (*domain.User, error)
+	GetUsers() ([]domain.User, error)
 }

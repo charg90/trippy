@@ -8,8 +8,8 @@ import (
 
 type User struct {
 	ID        uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
-	CreatedAt time.Time  `json:"createdAt"`
-	UpdatedAt time.Time  `json:"updatedAt"`
+	CreatedAt time.Time  `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
 	DeletedAt *time.Time `gorm:"index" json:"deletedAt"`
 	FirstName string     `json:"firstName"`
 	Password  string     `json:"password"`
@@ -19,8 +19,8 @@ type User struct {
 
 type Plan struct {
 	ID        uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
-	CreatedAt time.Time  `json:"createdAt"`
-	UpdatedAt time.Time  `json:"updatedAt"`
+	CreatedAt time.Time  `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
 	DeletedAt *time.Time `gorm:"index" json:"deletedAt"`
 	Name      string     `json:"name"`
 	StartDate time.Time  `json:"startDate"`
@@ -30,33 +30,36 @@ type Plan struct {
 }
 
 type Trip struct {
-	ID        uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
-	CreatedAt time.Time  `json:"createdAt"`
-	UpdatedAt time.Time  `json:"updatedAt"`
-	DeletedAt *time.Time `gorm:"index" json:"deletedAt"`
-	Name      string     `json:"name"`
-	StartDate time.Time  `json:"startDate"`
-	EndDate   time.Time  `json:"endDate"`
-	PlanId    uuid.UUID  `json:"planId"`
-	Location  string     `json:"location"`
+	ID         uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
+	CreatedAt  time.Time  `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt  time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
+	DeletedAt  *time.Time `gorm:"index" json:"deletedAt"`
+	Name       string     `json:"name"`
+	StartDate  time.Time  `json:"startDate"`
+	EndDate    time.Time  `json:"endDate"`
+	PlanId     uuid.UUID  `json:"planId"`
+	Location   string     `json:"location"`
 	Activities []Activity `gorm:"foreignKey:TripId" json:"activities"`
 }
 
 type Activity struct {
-	ID        uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
-	CreatedAt time.Time  `json:"createdAt"`
-	UpdatedAt time.Time  `json:"updatedAt"`
-	DeletedAt *time.Time `gorm:"index" json:"deletedAt"`
-	Name      string     `json:"name"`
-	StartDate time.Time  `json:"startDate"`
-	ActivityType  ActivityType `gorm:"foreignKey:ActivityTypeID" json:"activityType"`
+	ID             uuid.UUID    `gorm:"type:uuid;primaryKey" json:"id"`
+	CreatedAt      time.Time    `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt      time.Time    `gorm:"autoUpdateTime" json:"updatedAt"`
+	DeletedAt      *time.Time   `gorm:"index" json:"deletedAt"`
+	Name           string       `json:"name"`
+	StartDate      time.Time    `json:"startDate"`
+	ActivityType   ActivityType `gorm:"foreignKey:ActivityTypeID" json:"activityType"`
 	ActivityTypeID uuid.UUID    `json:"activityTypeId"`
-	Price     float64    `json:"price"`
-	TripId    uuid.UUID  `json:"tripId"`
+	Price          float64      `json:"price"`
+	TripId         uuid.UUID    `json:"tripId"`
 }
 
 type ActivityType struct {
-	ID   uuid.UUID `gorm:"type:uuid;primaryKey" json:"id"`
-	Type string    `json:"type"`
-	Image string    `json:"image"` 
+	ID        uuid.UUID  `gorm:"type:uuid;primaryKey" json:"id"`
+	Type      string     `json:"type"`
+	Image     string     `json:"image"`
+	CreatedAt time.Time  `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
+	DeletedAt *time.Time `gorm:"index" json:"deletedAt"`
 }
